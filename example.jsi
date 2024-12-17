@@ -1,0 +1,22 @@
+// This is a function that should create a closure scoping issue
+// in JavaScript. This is a common issue in JavaScript where the
+// variable `i` is shared across all the functions in the array.
+// JSI fixes this automagically!
+function createCounters() {
+    let counters = [];
+    for (var i = 0; i < 3; i++) {
+        counters.push(function() {
+            return i;
+        });
+    }
+    return counters;
+}
+
+const counters = createCounters();
+console.log(counters[0]()); // 0
+console.log(counters[1]()); // 1
+console.log(counters[2]()); // 2
+
+// This will be converted to "null" in JSI.
+// This is to finally fix the `typeof null` issue in JavaScript.
+console.log(typeof null);
